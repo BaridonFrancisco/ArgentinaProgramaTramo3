@@ -155,4 +155,6 @@ public class comboFrame extends javax.swing.JFrame {
         jComboAlumnos.addItem(new Alumno("Marcos","Peralta",234134));
         jComboAlumnos.addItem(new Alumno("Armin","Gutierrez",201345));
     }
+  
+    
 }
