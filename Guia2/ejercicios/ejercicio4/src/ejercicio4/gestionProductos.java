@@ -12,14 +12,19 @@ import javax.swing.JOptionPane;
  * @version 8
  */
 public class gestionProductos extends javax.swing.JInternalFrame {
-    private boolean buscar=false;
-    private boolean productoEncontrado =false;
+
+    private boolean buscar;
+    private boolean productoEncontrado;
+    private Producto aux = null;
+
     /**
      * Creates new form gestionProductos
      */
     public gestionProductos() {
         initComponents();
         jCantidad.setText(menuFrame.productosTreeset.size() + "");
+        buscar = false;
+        productoEncontrado = false;
     }
 
     /**
@@ -48,6 +53,7 @@ public class gestionProductos extends javax.swing.JInternalFrame {
         jbuttonEliminar = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
         jCantidad = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setText("Gestion de Productos");
@@ -102,6 +108,9 @@ public class gestionProductos extends javax.swing.JInternalFrame {
 
         jCantidad.setText("Pro:0");
 
+        jLabel7.setText("*");
+        jLabel7.setToolTipText("El codigo del producto debe ser mayor a 0.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,19 +142,21 @@ public class gestionProductos extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(tPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jcomboRubro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(23, 23, 23))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jbuttonBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addComponent(tStock, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jbuttonBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(tPrecio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(14, 14, 14))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButtonGuardar)
@@ -167,7 +178,8 @@ public class gestionProductos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbuttonBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -221,6 +233,25 @@ public class gestionProductos extends javax.swing.JInternalFrame {
 
     private void jbuttonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonEliminarActionPerformed
         // TODO add your handling code here:
+
+        if (buscar && productoEncontrado) {
+            var respuesta = JOptionPane.showConfirmDialog(this, "Desea eliminar el elemento" + aux, "Eliminar", JOptionPane.YES_NO_OPTION);
+            if (respuesta == 0) {
+                productoEncontrado = false;
+                menuFrame.productosTreeset.remove(aux);
+                buscar = false;
+            }
+        } else {
+            if (!buscar) {
+                JOptionPane.showMessageDialog(this, "Debe buscar el codigo primero", "Busque el producto por favor", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+
+                JOptionPane.showMessageDialog(this, "El codigo del producto no fue encontrado ingrese otro y busquelo primero", "Busque el producto por favor", JOptionPane.WARNING_MESSAGE);
+            }
+
+        }
+
 //        try {
 //            productoEncontrado = false;
 //            int codigo = Integer.parseInt(tCodigo.getText());
@@ -249,23 +280,35 @@ public class gestionProductos extends javax.swing.JInternalFrame {
 //            JOptionPane.showMessageDialog(this, "Ingrese un codigo valido para eliminar el producto mayor a 0", "Warning", JOptionPane.WARNING_MESSAGE);
 //        }
 
-
     }//GEN-LAST:event_jbuttonEliminarActionPerformed
 
     private void jbuttonBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonBuscarProductoActionPerformed
         // TODO add your handling code here:
-        try{
-            if(!buscar){
+        try {
+            if (!buscar) {
                 int codigo = Integer.parseInt(tCodigo.getText());
-       
+
+                if (codigo > 0) {
+                    for (Producto p : menuFrame.productosTreeset) {
+                        if (p.getCodigo() == codigo) {
+                            aux = p;
+                            JOptionPane.showMessageDialog(this, "Codigo" + p.getCodigo() + "Encontrado", "Buscando codigo", JOptionPane.INFORMATION_MESSAGE);
+                            productoEncontrado = true;
+                        }
+
+                    }
+                }
+
             }
-        }catch(NumberFormatException e){
-            
-            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un codigo numerico y valido para eliminar el producto mayor a 0", "Warning", JOptionPane.WARNING_MESSAGE);
+
         }
-        
-      
-       
+        buscar = true;
+        if (!productoEncontrado) {
+            JOptionPane.showMessageDialog(this, "Producto no encontrado", "Producto status", JOptionPane.INFORMATION_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_jbuttonBuscarProductoActionPerformed
 
@@ -280,6 +323,7 @@ public class gestionProductos extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbuttonBuscarProducto;
     private javax.swing.JButton jbuttonEliminar;
     private javax.swing.JButton jbuttonNuevo;
@@ -293,9 +337,12 @@ private Categorias getCategoria(String categoria) {
         //se puede usar cateroria en el comboBox
         Categorias aux = null;
         aux = switch (categoria) {
-            case "Limpieza" -> Categorias.LIMPIEZA;
-            case "Perfumeria" -> Categorias.PERFUMERIA;
-            default -> Categorias.COMESTIBLES;
+            case "Limpieza" ->
+                Categorias.LIMPIEZA;
+            case "Perfumeria" ->
+                Categorias.PERFUMERIA;
+            default ->
+                Categorias.COMESTIBLES;
         };
         return aux;
     }
