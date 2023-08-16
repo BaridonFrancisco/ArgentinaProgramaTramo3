@@ -70,6 +70,11 @@ public class menuFrame extends javax.swing.JFrame {
         jMenu2.setText("Consultas");
 
         jMenuItem2.setText("Por rubro");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Por nombre");
@@ -81,6 +86,11 @@ public class menuFrame extends javax.swing.JFrame {
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("Por precios");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -123,6 +133,28 @@ public class menuFrame extends javax.swing.JFrame {
         jDesktopEscritorio.add(ventanaProductos);
         jDesktopEscritorio.moveToFront(ventanaProductos);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        jDesktopEscritorio.removeAll();
+        jDesktopEscritorio.repaint();
+        jInternalTable ventana=new jInternalTable();
+        ventana.setVisible(true);
+        ventana.setTitle("Consultar por Precios");
+        jDesktopEscritorio.add(ventana);
+        jDesktopEscritorio.moveToFront(ventana);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        jDesktopEscritorio.removeAll();
+        jDesktopEscritorio.repaint();
+        listarPorRubro ventana=new listarPorRubro();
+        ventana.setVisible(true);
+        ventana.setTitle("Listar por producto");
+        jDesktopEscritorio.add(ventana);
+        jDesktopEscritorio.moveToFront(ventana);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

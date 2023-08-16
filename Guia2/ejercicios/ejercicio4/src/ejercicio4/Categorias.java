@@ -9,8 +9,6 @@ package ejercicio4;
  * @author Owner
  */
 enum Categorias {
-    LIMPIEZA,PERFUMERIA,COMESTIBLE;
-    
-
-    
+    LIMPIEZA,PERFUMERIA,COMESTIBLES;
+  
 }

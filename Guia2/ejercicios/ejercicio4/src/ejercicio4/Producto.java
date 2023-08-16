@@ -16,6 +16,10 @@ public class Producto implements Comparable<Producto> {
     private double precio;
     private Categorias rubro;
 
+    public Producto() {
+    }
+ 
+
     public Producto(int stock, int codigo, String descripcion, double precio, Categorias rubro) {
         this.stock = stock;
         this.codigo = codigo;
@@ -64,12 +68,17 @@ public class Producto implements Comparable<Producto> {
         this.rubro = rubro;
     }
     
-    
-    
     @Override
     public int compareTo(Producto o) {
         return Integer.compare(this.codigo,o.getCodigo());
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "stock=" + stock + ", codigo=" + codigo + ", descripcion=" + descripcion + ", precio=" + precio + ", rubro=" + rubro + '}';
+    }
+    
+    
     
     
 }
