@@ -18,6 +18,37 @@ class NumeroTelefonico {
         this.area = area;
         this.numero = numero;
     }
+
+    public String getCodigoPais() {
+        return codigoPais;
+    }
+
+    public void setCodigoPais(String codigoPais) {
+        this.codigoPais = codigoPais;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return this.codigoPais+this.area+this.numero;
+    }
     
     
     
