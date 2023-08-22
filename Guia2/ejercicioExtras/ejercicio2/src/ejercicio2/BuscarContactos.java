@@ -303,11 +303,19 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
         String apellido="";
         String numero="";
         String email="";
-        
+       boolean camposVacios=nombre.isEmpty()&& apellido.isEmpty() && numero.isEmpty() && email.isEmpty();
+       boolean bandera=false;
         Pattern patron=Pattern.compile("\\d");
         Matcher macher=patron.matcher(numero);
-        JOptionPane.showInputDialog(this,"Ingrese su nombre","nombre,");
-        JOptionPane.showInputDialog(this,"Ingrese su apellido","nombre,");
+        nombre=JOptionPane.showInputDialog(this,"Ingrese su nombre","");
+        apellido=JOptionPane.showInputDialog(this,"Ingrese su apellido","");
+        numero=JOptionPane.showInputDialog(this,"Ingrese su numero","");
+        email=JOptionPane.showInputDialog(this,"Ingrese su email","");
+        if(!camposVacios){
+            
+        }else{
+            
+        }
         
     }//GEN-LAST:event_botonEditarActionPerformed
 
