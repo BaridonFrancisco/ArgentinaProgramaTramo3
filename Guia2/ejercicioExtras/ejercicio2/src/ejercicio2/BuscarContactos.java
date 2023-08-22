@@ -5,6 +5,8 @@
 package ejercicio2;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
@@ -16,16 +18,12 @@ import javax.swing.event.ListSelectionListener;
  * @author Owner
  */
 public class BuscarContactos extends javax.swing.JInternalFrame {
-    
+
     DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCelllEditable(int a, int b) {
             return false;
         }
     };
-    
-   
-    
-    
 
     /**
      * Creates new form BuscarContactos
@@ -107,6 +105,11 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
         });
 
         botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEditarActionPerformed(evt);
+            }
+        });
 
         botonEliminar.setText("Eliminar");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -196,28 +199,32 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
     private void jbuscarEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jbuscarEKeyReleased
         // TODO add your handling code here:
         borrarFilas();
         String item = (String) jComboBox2.getSelectedItem();
         String box = jbuscarE.getText();
-        
+
         for (Contacto c : ej2Menu.listaContactos) {
             boolean condicion = false;
             condicion = switch (item) {
-                case "Nombre" -> c.getNombre().equals(box);
-                case "Apellido" -> c.getApellido().equals(box);
-                case "Numero" -> c.getNumeroTelefonico().equals(box);
-                default -> c.getEmail().equals(box);
+                case "Nombre" ->
+                    c.getNombre().equals(box);
+                case "Apellido" ->
+                    c.getApellido().equals(box);
+                case "Numero" ->
+                    c.getNumeroTelefonico().equals(box);
+                default ->
+                    c.getEmail().equals(box);
             };
-            
+
             if (condicion) {
                 modelo.addRow(new Object[]{
                     c.getNombre(), c.getApellido(), c.getNumeroTelefonico(), c.getEmail()
                 });
             }
-            
+
         }
 
 //        switch (item) {
@@ -267,32 +274,43 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         // TODO add your handling code here:
-        int filaSelecionada=tabla.getSelectedRow();
-    
-        if(filaSelecionada!=-1){
-        String [] valores=new String[4];
-        for(int i=0;i<valores.length;i++){
-            valores[i]=(String)tabla.getValueAt(filaSelecionada,i);
-            
-        }
-        Contacto contacto=new Contacto(valores[0],valores[1],valores[2],valores[3]);
-        
-       // JOptionPane.showMessageDialog(this,"Fila"+tabla.getSelectedRow()+"Columna"+tabla.getSelectedColumn(),"Aviso",JOptionPane.INFORMATION_MESSAGE);
-        
-           if(ej2Menu.listaContactos.contains(contacto)){
-               ej2Menu.listaContactos.remove(contacto);
-                JOptionPane.showMessageDialog(this,""+ej2Menu.listaContactos.size(),"Aviso",JOptionPane.INFORMATION_MESSAGE);
+        int filaSelecionada = tabla.getSelectedRow();
+
+        if (filaSelecionada != -1) {
+            String[] valores = new String[4];
+            for (int i = 0; i < valores.length; i++) {
+                valores[i] = (String) tabla.getValueAt(filaSelecionada, i);
+
+            }
+            Contacto contacto = new Contacto(valores[0], valores[1], valores[2], valores[3]);
+
+            // JOptionPane.showMessageDialog(this,"Fila"+tabla.getSelectedRow()+"Columna"+tabla.getSelectedColumn(),"Aviso",JOptionPane.INFORMATION_MESSAGE);
+            if (ej2Menu.listaContactos.contains(contacto)) {
+                ej2Menu.listaContactos.remove(contacto);
+                JOptionPane.showMessageDialog(this, "" + ej2Menu.listaContactos.size(), "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 modelo.removeRow(filaSelecionada);
-           }else{
-               JOptionPane.showMessageDialog(this,"No se puedo borrar el elemento","Aviso",JOptionPane.INFORMATION_MESSAGE);
-           }
-            
-        
-     
-
-
+            } else {
+                JOptionPane.showMessageDialog(this, "No se puedo borrar el elemento", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
     }//GEN-LAST:event_botonEliminarActionPerformed
-  }
+    }
+
+
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        // TODO add your handling code here:
+        int fila=tabla.getSelectedRow();
+        String nombre="";
+        String apellido="";
+        String numero="";
+        String email="";
+        
+        Pattern patron=Pattern.compile("\\d");
+        Matcher macher=patron.matcher(numero);
+        JOptionPane.showInputDialog(this,"Ingrese su nombre","nombre,");
+        JOptionPane.showInputDialog(this,"Ingrese su apellido","nombre,");
+        
+    }//GEN-LAST:event_botonEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonEditar;
@@ -318,29 +336,29 @@ private void cargarColumnasTabla() {
     }
 
     private void borrarFilas() {
-        int filas = modelo.getRowCount()-1;
+        int filas = modelo.getRowCount() - 1;
         for (int f = filas; f >= 0; f--) {
             modelo.removeRow(f);
-            
+
         }
-        
     }
 
-//private void tablaPostAddCode(java.awt.event.ActionEvent evt) {
-//    DefaultListSelectionModel selectionModel = (DefaultListSelectionModel) tabla.getSelectionModel();
-//    
-//    selectionModel.addListSelectionListener(new ListSelectionListener() {
-//        @Override
-//        public void valueChanged(ListSelectionEvent e) {
-//            if (!e.getValueIsAdjusting() && tabla.getSelectedRow() != -1) {
-//                botonEditar.setEnabled(true);
-//                botonEliminar.setEnabled(true);
-//            } else {
-//                botonEliminar.setEnabled(false); 
-//                botonEditar.setEnabled(false);
-//            }
-//        }
-//    });
-//} 
- 
+    private Contacto obtenerValorFila() {
+        int filaSelecionada = tabla.getSelectedRow();
+        Contacto contacto = null;
+        if (filaSelecionada != -1) {
+            String[] valores = new String[4];
+            for (int i = 0; i < valores.length; i++) {
+                valores[i] = (String) tabla.getValueAt(filaSelecionada, i);
+            }
+            contacto = new Contacto(valores[0], valores[1], valores[2], valores[3]);
+        }
+        return contacto;
+    }
+    private void reemplazarFila(int fila,JTable tabla,Object[] nuevoDato){
+        DefaultTableModel modeloTabla=(DefaultTableModel)tabla.getModel();
+        modeloTabla.removeRow(fila);
+        modeloTabla.insertRow(fila,nuevoDato);
+        
+    }
 }
