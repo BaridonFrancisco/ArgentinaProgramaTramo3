@@ -21,8 +21,9 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
 
     DefaultTableModel modelo = new DefaultTableModel() {
         public boolean isCelllEditable(int a, int b) {
-            return false;
+            return true;
         }
+        
     };
 
     /**
@@ -305,18 +306,21 @@ public class BuscarContactos extends javax.swing.JInternalFrame {
         String email="";
        boolean camposVacios=nombre.isEmpty()&& apellido.isEmpty() && numero.isEmpty() && email.isEmpty();
        boolean bandera=false;
+       boolean numeroEntre=numero.length()>8 && numero.length()<15;
         Pattern patron=Pattern.compile("\\d");
         Matcher macher=patron.matcher(numero);
         nombre=JOptionPane.showInputDialog(this,"Ingrese su nombre","");
         apellido=JOptionPane.showInputDialog(this,"Ingrese su apellido","");
         numero=JOptionPane.showInputDialog(this,"Ingrese su numero","");
         email=JOptionPane.showInputDialog(this,"Ingrese su email","");
-        if(!camposVacios){
-            
+        if(!camposVacios && macher.matches() && numeroEntre){
+           
         }else{
             
         }
-        
+        //TODO 
+        //usar un set y el metodo definido setearLosvalores add modelo y borrar de la coleccion es
+        //un treeset no tiene get() !!
     }//GEN-LAST:event_botonEditarActionPerformed
 
 
